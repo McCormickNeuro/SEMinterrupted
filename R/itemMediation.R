@@ -33,7 +33,6 @@ itemMediation <- function(data       = NULL,
                 missing = missing, fixed.x = fixed.x, se = se,
                 bootstrap = bootstrap)
   })
-
   names(fits) <- c(items, m)
 
   return(fits)
