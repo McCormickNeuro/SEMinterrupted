@@ -8,6 +8,8 @@ tableMIs <- function(fitObj      = NULL,
                      std.nox     = FALSE,
                      pretty      = FALSE){
 
+  `%>%` <- magrittr::`%>%`
+
   table <- lavaan::modindices(object = fitObj, sort = TRUE) %>%
     dplyr::mutate(dplyr::across(where(is.numeric), round, 3))
 

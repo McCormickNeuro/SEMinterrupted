@@ -4,16 +4,19 @@
 #' @keywords internal
 
 tableParameters <- function(fits         = NULL,
-                            standardize  = FALSE){
+                            standardize  = FALSE,
+                            filter       = FALSE){
 
   if (!is.list(fits)){fits <- list(fits)}
 
   paramTables <- lapply(fits, function(x){
     if (standardize){
-      lavaan::standardizedSolution(x)
+      tab <- lavaan::standardizedSolution(x)
     } else {
-      lavaan::parameterEstimates(x)
+      tab <- lavaan::parameterEstimates(x)
     }
+    if (filter){tab <- tab[tab$label != "",]}
+    return(tab)
   })
 
   return(paramTables)

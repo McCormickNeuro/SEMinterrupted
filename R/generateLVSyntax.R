@@ -12,7 +12,7 @@ generateLVSyntax <- function(x            = NULL,
                              fixed.x      = FALSE,
                              se           = "standard",
                              bootstrap    = 1000,
-                             program      = c("both", "lavaan", "Mplus")){
+                             program      = c("all", "lavaan", "Mplus")){
 
   # Error Checks #
   if (is.null(x)){stop("No valid X variable named...")}
@@ -47,7 +47,7 @@ generateLVSyntax <- function(x            = NULL,
       paste(mplus_items, collapse = ifelse(
         latentSpec == "composite", "@1 ", "* ")),
       ifelse(latentSpec == "composite", "@1; \n", "*; \n"),
-      "\t[", mplus_M, "@0]; ",
+      "\t[", mplus_m, "@0]; ",
       ifelse(latentSpec == "composite",
              paste0(mplus_m, ";"),
              paste0(mplus_m, "@1;")))
@@ -89,22 +89,22 @@ generateLVSyntax <- function(x            = NULL,
       "\n", items[1], " ~ 1*", items[2])
 
     mplusLVsyntax <- paste0(
-      mplus_m, " BY ", mplus_Itemabbr[1], "@1;\n",
+      mplus_m, " BY ", mplus_items[1], "@1;\n",
       "\t", mplus_items[1], " ON ", mplus_items[2], "@1;")
 
     mplusDefinesyntax <- ""
 
-  } else if (compType == "product"){
+  } else if (type == "product"){
 
     lavLVsyntax <- ""
 
     mplusLVsyntax <- paste0(
-      mplus_M, " | ", mplus_items[1],
+      mplus_m, " | ", mplus_items[1],
       " ON ", mplus_items[2], ";")
 
     mplusDefinesyntax <- ""
 
-  } else if (compType == "ratio"){
+  } else if (type == "ratio"){
 
     lavLVsyntax <- ""
 
@@ -141,19 +141,27 @@ generateLVSyntax <- function(x            = NULL,
 
   } else if (type == "difference"){
 
-    lavItemsyntax <- paste(
-      sapply(items, function(item){
-        paste0(item, " ~~ ", item)
-      }),
-      collapse = "\n")
+    # lavItemsyntax <- paste(
+    #   sapply(items, function(item){
+    #     paste0(item, " ~~ ", item)
+    #   }),
+    #   collapse = "\n")
 
-    mplusItemsyntax <- paste(
-      sapply(mplus_items, function(item){
-        paste0("\t", item, ";")
-      }),
-      collapse = "\n")
+    # mplusItemsyntax <- paste(
+    #   sapply(mplus_items, function(item){
+    #     paste0("\t", item, ";")
+    #   }),
+    #   collapse = "\n")
 
-  } else if (compType == "product"){
+    lavItemsyntax <- paste0(
+      items[2], " ~~ ", items[2], "\n"
+    )
+
+    mplusItemsyntax <- paste0(
+      "\t", items[2], ";\n"
+    )
+
+  } else if (type == "product"){
 
     lavItemsyntax <- ""
 
@@ -165,7 +173,7 @@ generateLVSyntax <- function(x            = NULL,
       }),
       collapse = "\n")
 
-  } else if (compType == "ratio"){
+  } else if (type == "ratio"){
 
     lavItemsyntax <- ""
 
@@ -263,8 +271,8 @@ generateLVSyntax <- function(x            = NULL,
     "\tSTDYX;"
   )
 
-  return(if(program == "both"){list(lavaan_syntax = lavaan_syntax,
-                                    mplus_syntax = mplus_syntax)}
-         if(program == "lavaan"){list(lavaan_syntax = lavaan_syntax)}
-         if(program == "Mplus"){list(mplus_syntax = mplus_syntax)})
+  return(if(program == "all"){list(lavaan_syntax = lavaan_syntax,
+                                    mplus_syntax = mplus_syntax)
+         } else if (program == "lavaan"){list(lavaan_syntax = lavaan_syntax)
+         } else if (program == "Mplus"){list(mplus_syntax = mplus_syntax)})
 }
