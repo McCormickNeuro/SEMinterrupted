@@ -55,6 +55,8 @@ SEMinterrupted <- function(data                  = NULL,
   if (is.null(program)){program <- "all"}
   program <- match.arg(program)
   if (compositeType == "product" | compositeType == "ratio"){program <- "Mplus"}
+  print("The friendly neighborhood SEM elves are building your models...please be patient with them.",
+        quote = FALSE)
 
   #### Organize Data ####
   dat <- data[,(names(data) %in% c(id, x, y, items))]

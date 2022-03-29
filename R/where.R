@@ -2,12 +2,12 @@
 #' @keywords internal
 
 where <- function(fn) {
-  predicate <- as_function(fn)
+  predicate <- as.function(fn)
 
   function(x, ...) {
     out <- predicate(x, ...)
 
-    if (!is_bool(out)) {
+    if (!is.logical(out)) {
       abort("`where()` must be used with functions that return `TRUE` or `FALSE`.")
     }
 
