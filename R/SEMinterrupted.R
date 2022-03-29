@@ -18,7 +18,7 @@
 #' @importFrom tools toTitleCase
 #' @importFrom magrittr `%>%`
 #' @importFrom dplyr filter mutate select rowwise relocate across
-#' @importFrom stats reorder
+#' @importFrom stats reorder runif
 #' @importFrom ggsci scale_color_npg
 #'
 #' @return Object containing SEM, interrupted outputs

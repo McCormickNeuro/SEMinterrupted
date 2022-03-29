@@ -1,11 +1,13 @@
 Package: SEMinterrupted
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Detection of Interrupted Causal Structures in Mediation Models of Composites
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Ethan M. McCormick
+Maintainer: Ethan M. McCormick <ethan.mccormick@radboudumc.nl>
+Description: This package probes the individual-item structure of composites  
+    (e.g., sums, means, products) in mediation models to detect interrupted 
+    mediation, where some items support the A path but others the B path, or
+    suppressed mediation where only a small subset of items mediate the effect.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

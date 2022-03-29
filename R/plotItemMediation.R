@@ -70,7 +70,6 @@ plotItemMediation <- function(paramTables  = NULL,
     return(list(g = g, q = q))
   })
 
-  library(patchwork)
   gq <- ((gList[[1]]$g + ggplot2::labs(title="Items by Effect Discrepancy") +
            ggplot2::theme(plot.title=ggplot2::element_text(size=14))) |
           gList[[2]]$g |
@@ -83,7 +82,7 @@ plotItemMediation <- function(paramTables  = NULL,
        gList[[4]]$q)
 
   gq <- gq +
-    plot_annotation(title = "Distribution of Mediation Effects",
+    patchwork::plot_annotation(title = "Distribution of Mediation Effects",
                     theme = ggplot2::theme(
                       plot.title = ggplot2::element_text(
                         size = 18,
